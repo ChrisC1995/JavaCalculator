@@ -1,7 +1,9 @@
 package Calc;
 import java.util.Scanner;
 import java.util.ArrayList;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by christiancampbell on 10/10/16.
@@ -12,9 +14,11 @@ public class Calc {
 
 
     public static ArrayList<String> nums = new ArrayList<>();
-    public static void Calculator(){
+    public static void Calculator() throws IOException{
+        String fileName = "CalcHistory.txt";
+        PrintWriter outFile = new PrintWriter(new FileWriter(fileName));
         while(true) {
-            System.out.println("Please Choose a Number" + "\n" + "Press 1 for Calculator" + "\n" + "Press 2 for Tip Calculator" + "\n" + "Press 3 For Help" + "\n" + "Press 4 to end");
+            System.out.println("*********************"+ "\n" + "Please Choose a Number" + "\n" + "Press 1 for Calculator" + "\n" + "Press 2 for Tip Calculator" + "\n" + "Press 3 For Help" + "\n" + "Press 4 to clear history" + "\n" + "Press 5 to add grocery tax" + "\n" + "Press 6 to end" + "\n" +  "*********************");
             Scanner option = new Scanner(System.in);
             int options = option.nextInt();
 
@@ -54,12 +58,6 @@ public class Calc {
 
                 System.out.println(nums);
 
-                System.out.println("Would you like to do some more math? y/n");
-                Scanner decision = new Scanner(System.in);
-                String decision1 = decision.nextLine();
-                if (decision1.equals("n")) {
-                    break;
-                }
 
 
             }
@@ -72,15 +70,37 @@ public class Calc {
                 double tip = tip1.nextDouble();
                 double totalBill;
                 totalBill = Math.round(bill + (bill * tip * 100.00))/100.00;
-                System.out.println("Your total bill is: " + totalBill);
+                nums.add("Bill: " + bill+ "& " + "Tip: " + totalBill);
+                System.out.println("Your total tip is: " + totalBill);
+                System.out.println(nums);
 
             }
             else if (options == 3){
-                System.out.println("Press a button to select a function. Calculator is a standard calculator that adds/multiplies/subtracts/divides. Tip Calculator is a calculator that calculates the tip. Help displays this information. End ends the program.");
+                System.out.println("Press a button to select a function. Calculator is a standard calculator that adds/multiplies/subtracts/divides. Tip Calculator is a calculator that calculates the tip. Help displays this information. End ends the program." + "\n" + "Clear clears the history");
+            }
+            else if(options == 6){
+                System.out.println("Thank you for using this app!");
+                outFile.println(nums);
+                outFile.close();
+                break;
             }
             else if(options == 4){
-                System.out.println("Thank you for using this app!");
-                break;
+                nums.clear();
+            }
+
+            else if (options == 5){
+                System.out.println("Please input the amount of your grocery bill");
+                Scanner bill3 = new Scanner (System.in);
+                double bills = bill3.nextDouble();
+                System.out.println("Please enter your state text. (0.06 for KY)");
+                Scanner stateTax = new Scanner (System.in);
+                double state = stateTax.nextDouble();
+                double groceryTax;
+                groceryTax = Math.round((bills * state)*100.00)/100.00;
+                nums.add("Tax: " + groceryTax);
+                System.out.println("Your tax amount is: " + groceryTax);
+                System.out.println(nums);
+
             }
         }
 
