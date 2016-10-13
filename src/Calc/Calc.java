@@ -15,43 +15,48 @@ public class Calc {
 
     // Should be named mainMenu or something like that
     public static void Calculator() throws IOException {
+        boolean handsLikeHouses = true;
         String fileName = "CalcHistory.txt";
         PrintWriter outFile = new PrintWriter(new FileWriter(fileName));
 
-        while(true) {
-            System.out.println("*********************"+ "\n" + "Please Choose a Number" + "\n" + "Press 1 for Calculator" + "\n" + "Press 2 for Tip Calculator" + "\n" + "Press 3 For Help" + "\n" + "Press 4 to clear history" + "\n" + "Press 5 to add grocery tax" + "\n" + "Press 6 to end" + "\n" +  "*********************");
+
+        while (handsLikeHouses == true) {
+            System.out.println("*********************" + "\n" + "Please Choose a Number" + "\n" + "Press 1 for Calculator" + "\n" + "Press 2 for Tip Calculator" + "\n" + "Press 3 For Help" + "\n" + "Press 4 to clear history" + "\n" + "Press 5 to add grocery tax" + "\n" + "Press 6 to end" + "\n" + "*********************");
             Scanner option = new Scanner(System.in);
             int options = option.nextInt();
 
-            // Should be a switch statement
-            if (options == 1) {
-                // made it a function
-                calculator();
-            }
-            else if (options == 2){
-                // make this a function
-                tip();
-            }
-            else if (options == 3){
-                System.out.println("Press a button to select a function. Calculator is a standard calculator that adds/multiplies/subtracts/divides. Tip Calculator is a calculator that calculates the tip. Help displays this information. End ends the program." + "\n" + "Clear clears the history");
-            }
-            else if(options == 6){
-                System.out.println("Thank you for using this app!");
-                outFile.println(nums);
-                outFile.close();
-                break;
-            }
-            else if(options == 4){
-                nums.clear();
+
+            switch (options) {
+                case 1: {
+                    calculator();
+                    break;
+                }
+                case 2: {
+                    tip();
+                    break;
+                }
+                case 3: {
+                    System.out.println("Press a button to select a function. Calculator is a standard calculator that adds/multiplies/subtracts/divides. Tip Calculator is a calculator that calculates the tip. Help displays this information. End ends the program." + "\n" + "Clear clears the history");
+                    break;
+                }
+                case 4: {
+                    nums.clear();
+                    break;
+                }
+                case 5: {
+                    grocery();
+                    break;
+                }
+                case 6: {
+                    System.out.println("Thank you for using this app!");
+                    outFile.println(nums);
+                    outFile.close();
+                    handsLikeHouses = false;
+                    break;
+                }
             }
 
-            // OUT OF ORDER
-            else if (options == 5){
-                grocery();
-
-            }
         }
-
     }
 
     public static void calculator() {
